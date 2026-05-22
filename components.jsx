@@ -116,27 +116,44 @@ function SAECard({ sae, onOpen }) {
 
 function PDFThumb({ src, label }) {
   const canvasRef = useRef(null);
+  const wrapRef  = useRef(null);
   const [loaded, setLoaded] = useState(false);
-  const [error, setError] = useState(false);
+  const [error,  setError]  = useState(false);
 
   useEffect(() => {
     if (!src || typeof pdfjsLib === 'undefined') { setError(true); return; }
     let cancelled = false;
+
     pdfjsLib.getDocument(src).promise
       .then(pdf => pdf.getPage(1))
       .then(page => {
         if (cancelled) return;
-        const vp = page.getViewport({ scale: 1.2 });
+        /* Scale pour remplir exactement la largeur du conteneur */
+        const w   = wrapRef.current ? wrapRef.current.clientWidth : 280;
+        const vp0 = page.getViewport({ scale: 1 });
+        const vp  = page.getViewport({ scale: w / vp0.width });
         const canvas = canvasRef.current;
         if (!canvas) return;
-        canvas.width = vp.width;
+        canvas.width  = vp.width;
         canvas.height = vp.height;
         return page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
       })
       .then(() => { if (!cancelled) setLoaded(true); })
       .catch(() => { if (!cancelled) setError(true); });
+
     return () => { cancelled = true; };
   }, [src]);
+
+  return (
+    <div className="preview-tile">
+      <div className="preview-canvas-wrap" ref={wrapRef}>
+        {error
+          ? <span className="preview-na">Aperçu indisponible</span>
+          : <canvas ref={canvasRef} className={loaded ? 'loaded' : ''} />}
+      </div>
+      <span className="label">{label}</span>
+    </div>);
+}
 
   return (
     <div className="preview-tile">
