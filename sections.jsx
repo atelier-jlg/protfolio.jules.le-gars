@@ -72,9 +72,9 @@ function CV() {
           Un parcours <em>concret,</em><br />pensé pour bâtir.
         </h2>
         <p className="cv-intro">
-          Du bac au chantier, j'ai construit un cheminement qui mêle exigence académique
+          Du lycée au terrain, j'ai construit un cheminement qui mêle exigence académique
           et terrain. Chaque étape m'a rapproché du métier que je veux exercer :
-          ingénieur génie civil, attentif au matériau, à l'usage et au carbone.
+          ingénieur, attentif au matériau qui composent l'habitat et aux enjeux environnementaux.
         </p>
       </div>
 
@@ -133,8 +133,8 @@ function SAESection({ onOpen }) {
         <div className="title-row">
           <h2>Mes SAÉ, <em>exercices pratiques.</em></h2>
           <p className="lead">
-            Les SAÉ structurent la formation en BUT Génie Civil. Six par semestre,
-            chacune un projet réel — calcul, conception, chantier, matériau, diagnostic.
+            Les SAÉ structurent la formation en BUT Génie Civil. En moyenne 6 par semestre,
+            chacune un projet se rapprochant du concret ; structure, organisation de chantier, résistance des matériaux, diagnostic.
             Cliquez sur une carte pour voir le détail, les livrables et le bilan.
           </p>
         </div>
@@ -178,14 +178,14 @@ function Company() {
           <p className="body">
             J'y travaille en alternance depuis la rentrée 2024. Je participe à des missions
             d'auscultation, de suivi de chantier et d'études techniques sur des ouvrages
-            existants : ponts, bâtiments patrimoniaux, parkings. C'est un environnement
-            exigeant, formateur, où la mesure de terrain rencontre le calcul.
+            existants : ponts, infrastructures particulières, aqueducs. C'est un environnement
+            exigeant, formateur, à la croisée entre terrain et bureau.
           </p>
 
           <div className="company-meta">
             <div className="item">
               <div className="k">Mon rôle</div>
-              <div className="v">Alternant Génie Civil</div>
+              <div className="v">Apprentis Technicien - Projeteur</div>
             </div>
             <div className="item">
               <div className="k">Depuis</div>
@@ -193,11 +193,11 @@ function Company() {
             </div>
             <div className="item">
               <div className="k">Site</div>
-              <div className="v">Agence Nantes</div>
+              <div className="v">Agence Ouest - Vertou</div>
             </div>
             <div className="item">
               <div className="k">Domaine</div>
-              <div className="v">Ouvrages d'art · Bâti existant</div>
+              <div className="v">Ouvrages d'art · Infrastructures</div>
             </div>
           </div>
         </div>
