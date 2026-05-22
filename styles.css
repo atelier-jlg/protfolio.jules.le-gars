@@ -876,25 +876,20 @@ a { color: inherit; }
 .preview-canvas-wrap {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
   overflow: hidden;
+  z-index: 1;          /* passe au-dessus du ::before décoratif */
 }
 .preview-canvas-wrap canvas {
-  width: 100%;
-  height: auto;
   display: block;
+  width: 100%;         /* le canvas est déjà à la bonne largeur en px,
+                          width:100% l'ancre proprement dans la tuile   */
   opacity: 0;
   transition: opacity var(--t-fast);
 }
 .preview-canvas-wrap canvas.loaded { opacity: 1; }
 .preview-na {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
   color: var(--olive-soft);
   font-size: var(--step-0);
   font-family: var(--font-mono);
