@@ -18,7 +18,7 @@ function Hero() {
 
             <h1 className="hero-name">
               <span className="first">Jules</span>
-              <span className="last">Le&nbsp;Gars.</span>
+              <span className="last">Le&nbsp;Gars</span>
             </h1>
 
             <p className="hero-bio">
@@ -131,7 +131,7 @@ function SAESection({ onOpen }) {
 
       <div className="sae-head">
         <div className="title-row">
-          <h2>Mes SAÉ, <em>douze terrains</em><br />de pratique.</h2>
+          <h2>Mes SAÉ, <em>exercices pratiques.</em></h2>
           <p className="lead">
             Les SAÉ structurent la formation en BUT Génie Civil. Six par semestre,
             chacune un projet réel — calcul, conception, chantier, matériau, diagnostic.
