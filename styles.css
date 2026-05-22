@@ -850,7 +850,7 @@ a { color: inherit; }
   gap: 12px;
 }
 .preview-tile {
-  aspect-ratio: 3/4;
+  height: 220px;
   border-radius: var(--radius);
   background: var(--olive);
   position: relative;
@@ -877,12 +877,15 @@ a { color: inherit; }
   position: absolute;
   inset: 0;
   overflow: hidden;
-  z-index: 1;          /* passe au-dessus du ::before décoratif */
+  z-index: 1;
+  display: flex;
+  align-items: center;   /* centre verticalement : évite le coin vide sur les plans */
+  justify-content: center;
 }
 .preview-canvas-wrap canvas {
   display: block;
-  width: 100%;         /* le canvas est déjà à la bonne largeur en px,
-                          width:100% l'ancre proprement dans la tuile   */
+  width: 100%;
+  flex-shrink: 0;
   opacity: 0;
   transition: opacity var(--t-fast);
 }
