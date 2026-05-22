@@ -1,5 +1,9 @@
 /* === Composants partagés ============================================ */
 const { useState, useEffect, useRef, useCallback } = React;
+if (typeof pdfjsLib !== 'undefined') {
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+}
 
 /* ——— Filets de grille architecturale ————————————————————————————— */
 function GridRules({ cols = 12 }) {
@@ -110,6 +114,41 @@ function SAECard({ sae, onOpen }) {
 
 }
 
+function PDFThumb({ src, label }) {
+  const canvasRef = useRef(null);
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (!src || typeof pdfjsLib === 'undefined') { setError(true); return; }
+    let cancelled = false;
+    pdfjsLib.getDocument(src).promise
+      .then(pdf => pdf.getPage(1))
+      .then(page => {
+        if (cancelled) return;
+        const vp = page.getViewport({ scale: 1.2 });
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        canvas.width = vp.width;
+        canvas.height = vp.height;
+        return page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+      })
+      .then(() => { if (!cancelled) setLoaded(true); })
+      .catch(() => { if (!cancelled) setError(true); });
+    return () => { cancelled = true; };
+  }, [src]);
+
+  return (
+    <div className="preview-tile">
+      <div className="preview-canvas-wrap">
+        {error
+          ? <span className="preview-na">Aperçu indisponible</span>
+          : <canvas ref={canvasRef} className={loaded ? 'loaded' : ''} />}
+      </div>
+      <span className="label">{label}</span>
+    </div>);
+}
+
 /* ——— SAÉ Modal (développé) ——————————————————————————————————————— */
 function SAEModal({ sae, onClose }) {
   // Esc to close
@@ -188,13 +227,15 @@ function SAEModal({ sae, onClose }) {
               <div className="modal-section">
                 <h3>Aperçus des livrables</h3>
                 <div className="previews">
-                  {sae.previewLabels.map((p, i) =>
-                <div key={i} className="preview-tile">
-                      <span className="label">{p}</span>
-                    </div>
-                )}
-                </div>
-              </div>
+                  {sae.livrables.filter(l => l.path && l.ext === 'PDF').length > 0
+                    ? sae.livrables.filter(l => l.path && l.ext === 'PDF').map((l, i) =>
+                      <PDFThumb key={i} src={l.path} label={l.name} />)
+                    : <p style={{ color: 'var(--ink-mute)', fontSize: 'var(--step-0)' }}>
+                        Aucun aperçu disponible.
+                    </p>
+                }
+            </div>
+          </div>
 
               {/* Bilan */}
               <div className="modal-section">
