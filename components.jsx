@@ -155,17 +155,6 @@ function PDFThumb({ src, label }) {
     </div>);
 }
 
-  return (
-    <div className="preview-tile">
-      <div className="preview-canvas-wrap">
-        {error
-          ? <span className="preview-na">Aperçu indisponible</span>
-          : <canvas ref={canvasRef} className={loaded ? 'loaded' : ''} />}
-      </div>
-      <span className="label">{label}</span>
-    </div>);
-}
-
 /* ——— SAÉ Modal (développé) ——————————————————————————————————————— */
 function SAEModal({ sae, onClose }) {
   // Esc to close
