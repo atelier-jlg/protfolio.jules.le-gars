@@ -622,6 +622,13 @@ a { color: inherit; }
   background-image:
     repeating-linear-gradient(45deg, rgba(240, 235, 224, 0.08) 0 8px, transparent 8px 16px);
 }
+.sae-card .preview .card-pdf-canvas {
+  display: block;
+  width: 100%;
+  opacity: 0;
+  transition: opacity var(--t-fast);
+}
+.sae-card .preview .card-pdf-canvas.loaded { opacity: 1; }
 .sae-card .preview .label {
   position: absolute;
   bottom: 8px; left: 10px;
