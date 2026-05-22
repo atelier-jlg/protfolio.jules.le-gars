@@ -12,7 +12,7 @@ const NAV_SECTIONS = [
 
 const ETUDES = [
   {
-    year: '2026 → présent',
+    year: 'rentrée 2026',
     title: 'Cycle Ingénieur ESB',
     place: 'École Supérieure du Bois, Nantes — parcours Conception Bois',
     desc: "Cycle ingénieur orienté conception et dimensionnement de structures bois, construction durable et résistance des matériaux. Une suite naturelle au BUT, vers une expertise plus pointue.",
@@ -29,22 +29,22 @@ const ETUDES = [
     year: '2023 → 2024',
     title: 'Classe Préparatoire PTSI',
     place: 'Lycée Livet, Nantes',
-    desc: "Année dense en physique, mathématiques et sciences de l'ingénieur. Une étape exigeante qui a confirmé mon attrait pour le concret.",
+    desc: "Année dense en physique, mathématiques et sciences de l'ingénieur. Une étape exigeante qui a forger ma discipline et confirmé mon attrait pour le concret.",
     tags: ['Maths', 'Physique', 'Sc. Ingénieur'],
   },
   {
     year: '2019 → 2023',
     title: 'Baccalauréat Général',
     place: 'Lycée Livet — spécialités Maths & Sciences de l\'Ingénieur',
-    desc: "Bases solides en raisonnement, modélisation et méthode. Premières rencontres avec la conception.",
+    desc: "Les bases de mon cursus, premières epériences en conception et en ingénierie. Premières rencontres avec la conception.",
     tags: ['Maths', 'SI'],
   },
   {
     year: '2015 → 2017',
     title: 'Découverte de l\'artisanat',
     place: 'Association L\'Outil en Main',
-    desc: "Initiation à l'ébénisterie, à la charpenterie et au travail du bois. Le premier contact avec la matière, dont j'ai gardé le goût.",
-    tags: ['Ébénisterie', 'Charpenterie'],
+    desc: "Initiation à l'ébénisterie, à la charpenterie et a bien d'autres corps d'artisanat. Ce fut mon premier contact avec le bois, dont j'ai gardé le goût.",
+    tags: ['Ébénisterie', 'Charpenterie','Artisanat'],
   },
 ];
 
