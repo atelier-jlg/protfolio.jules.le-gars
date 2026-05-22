@@ -97,8 +97,54 @@ function Carousel({ photos }) {
 
 }
 
+/* ——— Card PDF thumb (lazy — charge seulement quand visible) ————————— */
+function CardPDFThumb({ src }) {
+  const canvasRef = useRef(null);
+  const wrapRef   = useRef(null);
+  const [loaded, setLoaded] = useState(false);
+  const [active, setActive] = useState(false);
+
+  /* IntersectionObserver : ne déclenche le rendu qu'à l'approche du viewport */
+  useEffect(() => {
+    if (!wrapRef.current) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setActive(true); obs.disconnect(); } },
+      { rootMargin: '300px' }
+    );
+    obs.observe(wrapRef.current);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!active || !src || typeof pdfjsLib === 'undefined') return;
+    let cancelled = false;
+    pdfjsLib.getDocument(src).promise
+      .then(pdf => pdf.getPage(1))
+      .then(page => {
+        if (cancelled) return;
+        const w   = wrapRef.current ? wrapRef.current.clientWidth : 240;
+        const vp0 = page.getViewport({ scale: 1 });
+        const vp  = page.getViewport({ scale: w / vp0.width });
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        canvas.width  = vp.width;
+        canvas.height = vp.height;
+        return page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+      })
+      .then(() => { if (!cancelled) setLoaded(true); })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [active, src]);
+
+  return (
+    <div ref={wrapRef} style={{ position: 'absolute', inset: 0 }}>
+      <canvas ref={canvasRef} className={`card-pdf-canvas${loaded ? ' loaded' : ''}`} />
+    </div>);
+}
+
 /* ——— SAÉ Card (réduit) ————————————————————————————————————————— */
 function SAECard({ sae, onOpen }) {
+  const firstPdf = sae.livrables.find(l => l.path && l.ext === 'PDF');
   return (
     <article className="sae-card" onClick={() => onOpen(sae)}>
       <div className="num">
@@ -107,6 +153,7 @@ function SAECard({ sae, onOpen }) {
       <h3>{sae.title}</h3>
       <p className="blurb">{sae.short}</p>
       <div className="preview">
+        {firstPdf && <CardPDFThumb src={firstPdf.path} />}
         <span className="label">Aperçu — {sae.previewLabels[0]}</span>
       </div>
       <div className="more">Voir plus</div>
@@ -358,5 +405,5 @@ function Footer() {
 }
 
 Object.assign(window, {
-  GridRules, SectionMeta, Header, ScrollNext, Carousel, SAECard, SAEModal, Footer
+  GridRules, SectionMeta, Header, ScrollNext, Carousel, CardPDFThumb, SAECard, SAEModal, Footer
 });
